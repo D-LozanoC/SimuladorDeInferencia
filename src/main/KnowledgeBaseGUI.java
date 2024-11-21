@@ -1,116 +1,21 @@
 package main;
 
 import javax.swing.*;
+
+import classes.Condition;
+import classes.Fact;
+import classes.Hypothesis;
+
 import java.awt.*;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
-class Fact {
-    String attribute;
-    String value;
-
-    public Fact(String attribute, String value) {
-        this.attribute = attribute;
-        this.value = value;
-    }
-
-    @Override
-    public String toString() {
-        return attribute + " = " + value;
-    }
-}
-
-class Condition extends Fact {
-    public Condition(String attribute, String value) {
-        super(attribute, value);
-    }
-}
-
-class Hypothesis {
-    Fact fact;
-    SingleLinkedList<Condition> conditions;
-
-    public Hypothesis(Fact fact, Condition[] conditions) {
-        this.fact = fact;
-        this.conditions = new SingleLinkedList<>(Arrays.asList(conditions));
-    }
-
-    @Override
-    public String toString() {
-        return fact.toString();
-    }
-}
-
-class SingleLinkedList<T> implements Iterable<T> {
-    Node<T> head;
-
-    public SingleLinkedList(List<T> list) {
-        for (T item : list) {
-            addLast(item);
-        }
-    }
-
-    private void addLast(T item) {
-        Node<T> newNode = new Node<>(item);
-        if (head == null) {
-            head = newNode;
-        } else {
-            Node<T> current = head;
-            while (current.next != null) {
-                current = current.next;
-            }
-            current.next = newNode;
-        }
-    }
-
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        Node<T> current = head;
-        while (current != null) {
-            sb.append(current.data).append(" ");
-            current = current.next;
-        }
-        return sb.toString();
-    }
-
-    @Override
-    public java.util.Iterator<T> iterator() {
-        return new java.util.Iterator<T>() {
-            Node<T> current = head;
-
-            public boolean hasNext() {
-                return current != null;
-            }
-
-            public T next() {
-                T data = current.data;
-                current = current.next;
-                return data;
-            }
-        };
-    }
-
-    private static class Node<T> {
-        T data;
-        Node<T> next;
-
-        public Node(T data) {
-            this.data = data;
-        }
-    }
-}
 
 public class KnowledgeBaseGUI {
-    private JTextArea factsArea;
-    private JTextArea hypothesesArea;
-    private JTextArea outputArea;
+    private final JTextArea factsArea;
+    private final JTextArea hypothesesArea;
+    private final JTextArea outputArea;
 
     public KnowledgeBaseGUI() {
         JFrame frame = new JFrame("Sistema de Gestión de Conocimientos");
@@ -194,7 +99,7 @@ public class KnowledgeBaseGUI {
                 for (int i = 2; i < parts.length; i += 2) {
                     conditions.add(new Condition(parts[i], parts[i + 1]));
                 }
-                hypotheses.add(new Hypothesis(fact, conditions.toArray(new Condition[0])));
+                hypotheses.add(new Hypothesis(fact, conditions.toArray(Condition[]::new)));
             }
         }
         return hypotheses;
