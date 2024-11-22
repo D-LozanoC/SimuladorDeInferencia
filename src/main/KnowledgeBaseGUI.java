@@ -1,16 +1,13 @@
 package main;
 
-import javax.swing.*;
-
 import classes.Condition;
 import classes.Fact;
 import classes.Hypothesis;
-
 import java.awt.*;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.util.ArrayList;
-
+import javax.swing.*;
 
 public class KnowledgeBaseGUI {
     private final JTextArea factsArea;
@@ -22,8 +19,8 @@ public class KnowledgeBaseGUI {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(600, 400);
 
-        factsArea = createPlaceholderTextArea("Ingrese los hechos aquí (ej. color rojo)");
-        hypothesesArea = createPlaceholderTextArea("Ingrese las hipótesis aquí (ej. fruta manzana color rojo)");
+        factsArea = createPlaceholderTextArea("Ingrese los hechos aquí (ej. animal perro)");
+        hypothesesArea = createPlaceholderTextArea("Ingrese las hipótesis aquí (ej. mamífero perro animal perro tamaño mediano)");
         outputArea = new JTextArea(10, 30);
         outputArea.setEditable(false);
 
@@ -111,33 +108,25 @@ public class KnowledgeBaseGUI {
         do {
             factsAdded = false;
             for (Hypothesis hypothesis : hypotheses) {
-                if (canApplyRule(hypothesis, deducedFacts)) {
-                    if (!deducedFacts.contains(hypothesis.fact)) {
-                        deducedFacts.add(hypothesis.fact);
-                        factsAdded = true;
-                    }
+                if (!deducedFacts.contains(hypothesis.fact) && canApplyRule(hypothesis, deducedFacts)) {
+                    deducedFacts.add(hypothesis.fact);
+                    factsAdded = true;
                 }
             }
         } while (factsAdded);
         return deducedFacts;
     }
-
+    
 
     private boolean canApplyRule(Hypothesis hypothesis, ArrayList<Fact> currentFacts) {
         for (Condition condition : hypothesis.conditions) {
-            boolean conditionMet = false;
-            for (Fact fact : currentFacts) {
-                if (condition.attribute.equals(fact.attribute) && condition.value.equals(fact.value)) {
-                    conditionMet = true;
-                    break;
-                }
-            }
-            if (!conditionMet) {
+            if (!currentFacts.contains(new Fact(condition.attribute, condition.value))) {
                 return false;
             }
         }
         return true;
     }
+    
 
     private void displayDeducedFacts(ArrayList<Fact> deducedFacts) {
         outputArea.setText("Hechos deducidos:\n");
