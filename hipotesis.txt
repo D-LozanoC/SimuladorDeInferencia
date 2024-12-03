@@ -1,4 +1,0 @@
-D V A V B V
-H V B V F V
-W V H V W V
-Z V W V E V

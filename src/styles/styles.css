@@ -1,0 +1,166 @@
+/* Reset de márgenes y padding */
+body {
+    padding: 0;
+    margin: 0;
+    color: #eee;
+    background-color: #2c2c2c;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    height: 100vh;
+    line-height: 1.5;
+}
+
+/* Contenedor principal, centrado y con separación de secciones */
+main {
+    place-content: center;
+    display: grid;
+    grid-template-areas: 
+        "header header"
+        "facts rules"
+        "inference inference";
+    gap: 20px;
+    padding: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+
+/* Estilo para la cabecera */
+header {
+    grid-area: header;
+    text-align: center;
+}
+
+header h1 {
+    font-size: 2.5rem;
+    color: #fff;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+/* Sección de crear base de conocimiento */
+.create-kb, .kb-selector {
+    background-color: #333;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+    margin-bottom: 20px;
+    transition: transform 0.3s ease;
+}
+
+.kb-selector {
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+}
+
+.create-kb:hover, .kb-selector:hover {
+    transform: translateY(-5px);
+}
+
+label {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 1.1rem;
+    color: #fff;
+}
+
+input[type="text"], select {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 12px;
+    border: 2px solid #444;
+    border-radius: 6px;
+    background-color: #2a2a2a;
+    color: #eee;
+    font-size: 1rem;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+input[type="text"]:focus, select:focus {
+    border-color: #4CAF50;
+    background-color: #333;
+    outline: none;
+}
+
+/* Estilo para el botón de creación */
+button {
+    padding: 12px 25px;
+    background-color: #4CAF50;
+    color: #fff;
+    font-size: 1.1rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    width: 100%;
+}
+
+button:hover {
+    background-color: #45a049;
+    transform: translateY(-3px);
+}
+
+button:active {
+    transform: translateY(1px);
+}
+
+/* Estilo para el mensaje de error */
+#error-message {
+    color: red;
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+/* Secciones de hechos, reglas e inferencias */
+.facts, .rules, .inference {
+    background-color: #3a3a3a;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+    transition: transform 0.3s ease;
+}
+
+.facts:hover, .rules:hover, .inference:hover {
+    transform: translateY(-5px);
+}
+
+.facts h3, .rules h3, .inference h3 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    color: #fff;
+}
+
+/* Diseño responsivo */
+@media (max-width: 768px) {
+    main {
+        grid-template-areas: 
+            "header"
+            "facts"
+            "rules"
+            "inference";
+    }
+
+    .create-kb, .kb-selector {
+        margin-bottom: 15px;
+    }
+
+    header h1 {
+        font-size: 2rem;
+    }
+}
+
+/* Agregar un borde y fondo claro al select y input para hacerlos más visibles */
+select, input[type="text"] {
+    background-color: #2a2a2a;
+    border-color: #555;
+}
+
+/* Agregar un border de sombra al input y select cuando se les da foco */
+select:focus, input[type="text"]:focus {
+    border-color: #4CAF50;
+}
